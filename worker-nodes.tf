@@ -105,3 +105,7 @@ resource "aws_security_group_rule" "nodes_cluster_inbound" {
   to_port                  = 65535
   type                     = "ingress"
 }
+resource "aws_autoscaling_attachment" "autoscaling_attachment" {
+  autoscaling_group_name = lookup(lookup(lookup(aws_eks_node_group.this, "resources")[0], "autoscaling_groups")[0], "name")
+  alb_target_group_arn   = aws_lb_target_group.test.arn
+}
